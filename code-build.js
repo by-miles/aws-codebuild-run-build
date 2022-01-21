@@ -169,6 +169,11 @@ function githubInputs() {
   const buildspecOverride =
     core.getInput("buildspec-override", { required: false }) || undefined;
 
+  const artifactsOverride = JSON.parse(
+    core.getInput("artifacts-override", { required: false }) ||
+      '{ "type": "NO_ARTIFACTS" }'
+  );
+
   const envPassthrough = core
     .getInput("env-vars-for-codebuild", { required: false })
     .split(",")
@@ -181,6 +186,7 @@ function githubInputs() {
     repo,
     sourceVersion,
     buildspecOverride,
+    artifactsOverride,
     envPassthrough,
   };
 }
@@ -192,6 +198,7 @@ function inputs2Parameters(inputs) {
     repo,
     sourceVersion,
     buildspecOverride,
+    artifactsOverride,
     envPassthrough = [],
   } = inputs;
 
@@ -212,6 +219,7 @@ function inputs2Parameters(inputs) {
     sourceTypeOverride,
     sourceLocationOverride,
     buildspecOverride,
+    artifactsOverride,
     environmentVariablesOverride,
   };
 }
